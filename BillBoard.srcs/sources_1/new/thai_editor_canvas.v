@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module editor_canvas(
+module thai_editor_canvas(
     input clk,           // 100 MHz clock
     input rst,           // Reset button
     input [7:0] keycode, // Keypress from a keyboard (ASCII code)
@@ -40,26 +40,26 @@ module editor_canvas(
             for (i = 0; i < 8; i = i + 1) begin : row_gen
                 for (j = 0; j < 16; j = j + 1) begin : col_gen
                     // Initialize each element in the text_buffer to space (8'h00)
-                    text_buffer[i][j] = 8'h00;
+                    text_buffer[i][j] <= 8'h4D;
                 end
             end
         end else if (key_valid) begin
             // Insert character into text buffer when key is pressed
-            if (keycode == 8'h0D) begin // Enter key
+            if (keycode == 8'h50) begin // Enter key
                 // Move to next line
                 if (cur_y < 7) begin
                     cur_y <= cur_y + 1;
                     cur_x <= 0; // Start from the first column
                 end
-            end else if (keycode == 8'h08 || keycode == 8'h7f) begin // Backspace
+            end else if (keycode == 8'h4F) begin // Backspace
                 if (cur_x > 0) begin
                     cur_x <= cur_x - 1; // Move cursor back
                 end else if (cur_y > 0) begin
                     cur_y <= cur_y - 1;
                     cur_x <= 15;
                 end
-                text_buffer[cur_y][cur_x] <= 8'h00; // Remove character
-            end else if (keycode >= 8'h20 && keycode <= 8'h7E) begin
+                text_buffer[cur_y][cur_x] <= 8'h4D; // Remove character
+            end else if (keycode >= 8'h00 && keycode <= 8'h4D) begin
                 // ASCII printable characters
                 if (cur_x != 15 && cur_y != 7) begin
                     text_buffer[cur_y][cur_x] <= keycode; // Insert the character 
@@ -80,8 +80,7 @@ module editor_canvas(
     wire [7:0] rom_data;            // 8-bit row data from text ROM
     wire ascii_bit, ascii_bit_on;     // ROM bit and status signal
     
-    // instantiate ASCII ROM
-    full_font_rom rom(.clk(clk), .addr(rom_addr), .data(rom_data));
+    font_rom rom_thai(.clk(clk),.addr(rom_addr),.data(rom_data));
       
     // ASCII ROM interface
     assign rom_addr = {text_buffer[char_y][char_x], char_row};   // ROM address is ascii code + row
@@ -114,4 +113,3 @@ module editor_canvas(
     assign cursor_y = cur_y;
 
 endmodule
-

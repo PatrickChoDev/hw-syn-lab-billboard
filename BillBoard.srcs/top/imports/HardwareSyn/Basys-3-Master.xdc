@@ -156,12 +156,12 @@ set_property PACKAGE_PIN T18 [get_ports sw_btn]
 ##Sch name = JB2
 #set_property PACKAGE_PIN A16 [get_ports {JB[1]}]
 	#set_property IOSTANDARD LVCMOS33 [get_ports {JB[1]}]
-##Sch name = JB3
-#set_property PACKAGE_PIN B15 [get_ports {JB[2]}]
-	#set_property IOSTANDARD LVCMOS33 [get_ports {JB[2]}]
-##Sch name = JB4
-#set_property PACKAGE_PIN B16 [get_ports {JB[3]}]
-	#set_property IOSTANDARD LVCMOS33 [get_ports {JB[3]}]
+#Sch name = JB3
+set_property PACKAGE_PIN B15 [get_ports xuart_rx]
+	set_property IOSTANDARD LVCMOS33 [get_ports xuart_rx]
+#Sch name = JB4
+set_property PACKAGE_PIN B16 [get_ports xuart_tx]
+	set_property IOSTANDARD LVCMOS33 [get_ports xuart_tx]
 ##Sch name = JB7
 #set_property PACKAGE_PIN A15 [get_ports {JB[4]}]
 	#set_property IOSTANDARD LVCMOS33 [get_ports {JB[4]}]
